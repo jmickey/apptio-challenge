@@ -44,6 +44,7 @@ Developers will only need to have their AWS CLI default profile configured, `ter
 - The provided `terraform` will deploy the full AWS environment. Therefore each developer would most likely require their own AWS sandbox account. This is fine for testing as part of a development workflow, but production deployments will preferably be done via a CI/CD pipeline.
 - The `deptool.sh` provides little to no testing or guardrails. If something goes wrong it does not rollback gracefully, and could leave the AWS environment in an incomplete state. Again, these issues would best be dealt with via a CI/CD pipeline with Behaviour Driven Infrastructure (BDI) testing and automated rollbacks.
 - The `deptool.sh` currently just spams stdout/err. Controlling output and testing return codes would improve usability.
+- Currently the Fargate configuration is set to 2 containers, with no auto-scaling. This isn't difficult to add, but for the purposes of dev deployments it's fine.
 
 ## Alternatives
 
