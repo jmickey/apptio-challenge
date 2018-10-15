@@ -47,4 +47,5 @@ Developers will only need to have their AWS CLI default profile configured and `
 ## Alternatives
 
 - Cloudformation was considered over `terraform`, however cloudformation syntax is much less concise, and the feedback loop is not as rapid.
-- EC
+- EC2 was considered over Fargate, however this would increase the feedback time on deployments, and would introduce an inconsistency between the dev env (docker) and the deployment env (VM).
+- Azure was considered over AWS, however the support for `terraform` is quite poor in comparison to AWS.
