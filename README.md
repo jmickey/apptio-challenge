@@ -18,7 +18,7 @@ git clone git@github.com:jaymickey/apptio-challenge.git
 
 Execute the script:
 
-- `deptool.sh deploy` - Deploy or update the application. Terraform is idempotent, so it will only update resources as required. Docker also caches layers, so will only push a new image is there are changes. A new deployment of the container in ECS is forced as part of the script.
+- `deptool.sh deploy` - Deploy or update the application. Terraform is idempotent, so it will only update resources as required. Docker also caches layers, so will only push a new image is there are changes. A new deployment of the container in ECS is forced as part of the script. **Note**: The service can take 1-2 minutes to start on the first deploy!
 - `deptool.sh kill` - Kill the application and all related infrastructure. **WARNING:** This **WILL** destroy all the infrastructure managed by terraform with *extreme prejudice*. There is no confirmation and cancelling it will likely leave your infrastructure in an incomplete state.
 
 ## Resources
@@ -37,7 +37,7 @@ The provided `terraform` configuration will deploy the FULL environment, includi
 
 ### Config
 
-Developers will only need to have their AWS CLI default profile configured and `terraform` available in their `$PATH`.
+Developers will only need to have their AWS CLI default profile configured, `terraform` available in their `$PATH`, and the Docker CE installed.
 
 ## Improvements
 
