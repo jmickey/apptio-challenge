@@ -6,7 +6,7 @@ Repo containing code and assets created in order to complete the Apptio SRE inte
 
 1. AWS CLI installed and configured with **default** profile, **including access key and secret** - See [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) for details.
 2. Terraform. *Note: The deployment script will assume the `terraform` binary is in your `$PATH`*.
-3. Docker CE installedand running.
+3. Docker CE installed and running.
 
 ## Setup and Run
 
@@ -31,7 +31,7 @@ Execute the script:
 
 In this solution the application is downloaded via the S3 bucket into the container and extracted. The `REDISHOST` environment variable is set to point the application to the Redis instance/cluster. Developers can use the provided `docker-compose` to test the stack locally.
 
-Using the available `deptool.sh` deployment script, the container is deployed to AWS Elastic Container Service, as an AWS Fargate service. The deployment tool will trigger the `terraform apply` (with no confirmation); login to the Elastic Container Registry repository; build, tag, and push the image to the ECR repo; and force a deployment via the `aws ecs` CLI.
+Using the available `deptool.sh` deployment script, the container is deployed to AWS Elastic Container Service, as an AWS Fargate service. The deployment tool will trigger the `terraform apply` (with no confirmation); login to the Elastic Container Registry repository; build, tag, and push the image to the ECR repo; and force a deployment via the `aws ecs` CLI. The URL is then provided as the final output.
 
 The provided `terraform` configuration will deploy the FULL environment, including: VPC, public & private subnets, internet & NAT gateways, route tables, security groups, **Redis running on ElastiCache**, ECR repo, ECS task definition & service, and application load balancer.
 
@@ -42,7 +42,8 @@ Developers will only need to have their AWS CLI default profile configured, `ter
 ## Improvements
 
 - The provided `terraform` will deploy the full AWS environment. Therefore each developer would most likely require their own AWS sandbox account. This is fine for testing as part of a development workflow, but production deployments will preferably be done via a CI/CD pipeline.
-- The `deptool.sh` provides little to no testing or guardrails. If something goes wrong it does not rollback gracefully, and could leave the AWs environment in an incomplete state. Again, these issues would best be dealt with via a CI/CD pipeline with Behaviour Driven Infrastructure (BDI) testing and automated rollbacks.
+- The `deptool.sh` provides little to no testing or guardrails. If something goes wrong it does not rollback gracefully, and could leave the AWS environment in an incomplete state. Again, these issues would best be dealt with via a CI/CD pipeline with Behaviour Driven Infrastructure (BDI) testing and automated rollbacks.
+- The `deptool.sh` currently just spams stdout/err. Controlling output and testing return codes would improve usability.
 
 ## Alternatives
 
