@@ -8,11 +8,13 @@ then
     repo_url=$(terraform output ecr_repo_url)
     cluster_name=$(terraform output ecs_cluster_name)
     service_name=$(terraform output ecs_service_name)
+    public_url=$(terraform output load_balancer_address)
     login_cmd=$(aws ecr get-login --no-include-email)
     eval $login_cmd
     cd .. && docker build --rm -f 'Dockerfile' -t $repo_url .
     docker push $repo_url
     aws ecs update-service --cluster $cluster_name --service $service_name --force-new-deployment
+    echo $public_url
 elif [ "$ARG" = "kill" ]
 then
     cd terraform && terraform destroy -auto-approve
