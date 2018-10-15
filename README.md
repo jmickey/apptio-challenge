@@ -18,12 +18,12 @@ git clone git@github.com:jaymickey/apptio-challenge.git
 
 Execute the script:
 
-- `deptool.sh deploy` - Deploy or update the application. Terraform is idempotent, so it will only update resources as required. Docker also caches layers, so will only push a new image is there are changes. A new deployment of the container in ECS is forced as part of the script. **Note**: The service can take 1-2 minutes to start on the first deploy!
+- `deptool.sh deploy` - Deploy or update the application. Terraform is idempotent, so it will only update resources as required. Docker also caches layers, so will only push a new image if there are changes. A new deployment of the container in ECS is forced as part of the script. **Note**: The service can take 1-2 minutes to start on the first deploy!
 - `deptool.sh kill` - Kill the application and all related infrastructure. **WARNING:** This **WILL** destroy all the infrastructure managed by terraform with *extreme prejudice*. There is no confirmation and cancelling it will likely leave your infrastructure in an incomplete state.
 
 ## Resources
 
-- **Terraform** - Terraform is used as the infrastucture as code solution for creating and destroying the cloud-based resources. Terraform offers a declarative syntax, and is idempoent.
+- **Terraform** - Terraform is used as the infrastucture as code solution for creating and destroying the cloud-based resources. Terraform offers a declarative syntax, and is idempotent.
 - **AWS** - AWS was the chosen cloud provider. I chose this due to having great familiarity with the platform, and better support for Terraform than the alternatives. AWS also has a wide feature set and allows for global scalability.
 - **Fargate** - AWS ECS & Fargate offer a simple, easily scalable solution to running applications in the cloud. The same image can be run on the developers machine and in production. Fargate also requires less overall configuration and management of infrastructure (e.g. EC2 VMs) for a slightly higher cost.
 
@@ -42,7 +42,7 @@ Developers will only need to have their AWS CLI default profile configured, `ter
 ## Improvements
 
 - The provided `terraform` will deploy the full AWS environment. Therefore each developer would most likely require their own AWS sandbox account. This is fine for testing as part of a development workflow, but production deployments will preferably be done via a CI/CD pipeline.
-- The `deptool.sh` provides little to no testing or guardrails. If something goes wrong it does not rollback gracefully, and could leave the AWs environment in an incomplete state. Again, these issues would best be dealt with via a CI/CD pipeline with Behviour Driven Infrastructure (BDI) testing and automated rollbacks.
+- The `deptool.sh` provides little to no testing or guardrails. If something goes wrong it does not rollback gracefully, and could leave the AWs environment in an incomplete state. Again, these issues would best be dealt with via a CI/CD pipeline with Behaviour Driven Infrastructure (BDI) testing and automated rollbacks.
 
 ## Alternatives
 
