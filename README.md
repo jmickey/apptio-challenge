@@ -5,8 +5,9 @@ Repo containing code and assets created in order to complete the Apptio SRE inte
 ## Requirements
 
 1. AWS CLI installed and configured with **default** profile, **including access key and secret** - See [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) for details.
-2. Terraform. *Note: The deployment script will assume the `terraform` binary is in your `$PATH`*.
-3. Docker CE installed and running.
+2. Your IAM user account will need sufficient access to create the infrstructure. Granting `Administrator` access is easiest, but production environments should generally follow principle of least privilege.
+3. [Terraform](https://terraform.io). *Note: The deployment script will assume the `terraform` binary is in your `$PATH`*.
+4. Docker CE installed and running.
 
 ## Setup and Run
 
@@ -43,7 +44,7 @@ Developers will only need to have their AWS CLI default profile configured, `ter
 
 - The provided `terraform` will deploy the full AWS environment. Therefore each developer would most likely require their own AWS sandbox account. This is fine for testing as part of a development workflow, but production deployments will preferably be done via a CI/CD pipeline.
 - The `deptool.sh` provides little to no testing or guardrails. If something goes wrong it does not rollback gracefully, and could leave the AWS environment in an incomplete state. Again, these issues would best be dealt with via a CI/CD pipeline with Behaviour Driven Infrastructure (BDI) testing and automated rollbacks.
-- The `deptool.sh` currently just spams stdout/err. Controlling output and testing return codes would improve usability.
+- The `deptool.sh` currently has little feedback, but this is preferrable in many cases to the spam of `terraform` and the `awc ecs` CLI. An improvement to this script would be to make the output level configurable.
 - Currently the Fargate configuration is set to 2 containers, with no auto-scaling. This isn't difficult to add, but for the purposes of dev deployments it's fine.
 
 ## Alternatives
